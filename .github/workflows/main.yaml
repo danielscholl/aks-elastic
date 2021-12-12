@@ -1,0 +1,35 @@
+name: deploy
+
+on:
+  workflow_dispatch:
+
+env:
+  AZURE_LOCATION: centralus
+
+jobs:
+
+  development:
+    name: Development - Manual
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@master
+
+      - name: Azure Login
+        uses: Azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Validate Template Resources
+        uses: Azure/cli@1.0.4
+        with:
+          inlineScript: |
+            az deployment sub what-if --location $AZURE_LOCATION --template-file $GITHUB_WORKSPACE/main.bicep \
+              --parameter @$GITHUB_WORKSPACE/parameters.json
+
+      - name: Deploy Template Resources
+        uses: Azure/cli@1.0.4
+        with:
+          inlineScript: |
+            az deployment sub create --location $AZURE_LOCATION --template-file $GITHUB_WORKSPACE/main.bicep \
+              --parameter @$GITHUB_WORKSPACE/parameters.json
