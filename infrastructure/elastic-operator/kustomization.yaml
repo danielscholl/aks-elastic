@@ -3,5 +3,4 @@ kind: Kustomization
 namespace: elastic-system
 resources:
   - namespace.yaml
-  - storageclass.yaml
   - source.yaml
