@@ -1,61 +1,114 @@
-targetScope = 'subscription'
+@description('Location of the Resource Group. It uses the resourceGroup\'s location when not provided.')
+param location string =  resourceGroup().location
 
-var enableLock = false
-param tags object = {
-  environment: 'development'
-}
-param prefix string = 'iac'
 
-// Resource Group Parameters
-param groupName string = '${prefix}-bicep'
-param location string = 'centralus'
-
-// Cluster Parameters
-param aksVersion string = '1.20.7'
-param adminPublicKey string
-param adminGroupObjectIDs array = []
-
-// Create Resource Group
-resource resourceGroup 'Microsoft.Resources/resourceGroups@2021-01-01' = {
-  name: groupName
-  location: location
-  tags: tags
-}
-
-// Create a Managed User Identity for the Cluster
-module clusterIdentity 'modules/user_identity.bicep' = {
-  name: 'user_identity_cluster'
-  scope: resourceGroup
-  params: {
-    name: '${groupName}-cluster-identity'
+/////////////////////////////////
+// Service Resources Configuration
+/////////////////////////////////
+var configuration = {
+  name: 'instance'
+  gitops: {
+    name: 'sample-stamp'
+    url: 'https://github.com/danielscholl/gitops-sample-stamp'
+    tag: 'v0.0.1'
+    path: './clusters/sample-stamp'
   }
 }
 
-// Create Log Analytics Workspace
-module logAnalytics 'modules/azure_log_analytics.bicep' = {
-  name: 'log_analytics'
-  scope: resourceGroup
+//---------Kubernetes Construction---------
+module aksconst 'aks-construction/bicep/main.bicep' = {
+  name: 'aksconstruction'
   params: {
-    sku: 'PerGB2018'
+    resourceName: configuration.name
+    location : location
+
+    // Enable Capability Monitoring
+    omsagent: true
     retentionInDays: 30
+
+    // Enable Capability Policy
+    azurepolicy: 'audit'
+
+    // Enable Upgrade
+    upgradeChannel: 'node-image'
+
+    // Configure System Pool with CriticalAddonsOnly taint
+    SystemPoolType: 'Standard'
+    JustUseSystemPool: false
+
+    // Scale Default User Pool to 0
+    agentCount: 0
+    agentVMSize: 'Standard_DS2_v2'
+    osDiskType: 'Managed'
+
+    // Enable Flux
+    fluxGitOpsAddon: true
   }
-  // This dependency is only added to attempt to solve a timing issue.
-  // Identities sometimes list as completed but can't be used yet.
-  dependsOn: [
-    clusterIdentity
-  ]
 }
 
-// Create Virtual Network
-module vnet 'modules/azure_vnet.bicep' = {
-  name: 'azure_vnet'
-  scope: resourceGroup
+module nodepool1 'aks-construction/bicep/aksagentpool.bicep' = {
+  name: 'nodepool1'
   params: {
-    principalId: clusterIdentity.outputs.principalId
-    workspaceId: logAnalytics.outputs.Id
+    AksName: aksconst.outputs.aksClusterName
+    PoolName: 'espoolz1'
+    agentCount: 2
+    agentCountMax: 4
+    availabilityZones: [
+      '1'
+    ]
+    subnetId: ''
+    nodeTaints: ['app=elasticsearch:NoSchedule']
+    nodeLabels: {
+      purpose: 'elastic'
+    }
   }
-  dependsOn: [
-    clusterIdentity
-    logAnalytics
-  ]
 }
+module nodepool2 'aks-construction/bicep/aksagentpool.bicep' = {
+  name: 'nodepool2'
+  params: {
+    AksName: aksconst.outputs.aksClusterName
+    PoolName: 'espoolz2'
+    agentCount: 2
+    agentCountMax: 4
+    availabilityZones: [
+      '2'
+    ]
+    subnetId: ''
+    nodeTaints: ['app=elasticsearch:NoSchedule']
+    nodeLabels: {
+      purpose: 'elastic'
+    }
+  }
+}
+
+module nodepool3 'aks-construction/bicep/aksagentpool.bicep' = {
+  name: 'nodepool3'
+  params: {
+    AksName: aksconst.outputs.aksClusterName
+    PoolName: 'espoolz3'
+    agentCount: 2
+    agentCountMax: 4
+    availabilityZones: [
+      '3'
+    ]
+    subnetId: ''
+    nodeTaints: ['app=elasticsearch:NoSchedule']
+    nodeLabels: {
+      purpose: 'elastic'
+    }
+  }
+}
+
+//--------------Flux Config---------------
+module flux 'aks-construction/samples/flux/configpatterns/fluxConfig-InfraAndApps.bicep' = {
+  name: 'flux'
+  params: {
+    aksName: aksconst.outputs.aksClusterName
+    aksFluxAddOnReleaseNamespace: aksconst.outputs.fluxReleaseNamespace
+    fluxConfigRepo: 'https://github.com/danielscholl/aks-elastic'
+    fluxRepoInfraPath: './infrastructure'
+    fluxRepoAppsPath: './apps/staging'
+  }
+}
+
+output aksClusterName string = aksconst.outputs.aksClusterName

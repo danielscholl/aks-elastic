@@ -19,6 +19,51 @@ This repository contains a playground for working with Elastic Search.
 ![ES AKS Cluster](images/es-aks-cluster.png)
 
 
+### Installation
+
+#### AKS
+
+Using [AKS Construction](https://github.com/Azure/Aks-Construction), we can quickly set up an AKS cluster to the correct configuration. It has been referenced as a git submodule, and therefore easily consumed in [this projects bicep infrastructure file](main.bicep).
+
+The main.bicep deployment creates
+- 1 AKS Cluster, with CSI Secrets Managed Identity
+- 5 Azure Key Vaults
+- 3 User Assigned Managed Identities
+- The Azure Workload Identity Mutating Admission Webhook on the AKS cluster
+
+### Guide
+
+#### 1. clone the repo
+
+```
+git clone https://github.com/danielscholl/aks-elastic.git
+cd aks-elastic
+```
+
+#### 2. Deploy the infrastructure to your azure subscription
+
+```bash
+RESOURCE_GROUP='elastic-playground'
+AZURE_LOCATION='eastus'
+
+# Look for and ensure VM Support for the desired VM Size in the Region.
+az vm list-skus --location $AZURE_LOCATION --size Standard_D --all --output table |grep none
+
+az group create --name $RESOURCE_GROUP --location $AZURE_LOCATION
+DEPLOYMENT=$(az deployment group create -g $RESOURCE_GROUP -f main.bicep -o json)
+CLUSTER_NAME=$(echo $DEPLOYMENT | jq -r '.properties.outputs.aksClusterName.value')
+az aks get-credentials -n $CLUSTER_NAME -g $RESOURCE_GROUP --overwrite-existing
+
+
+# Validate Nodes availability over Zones
+kubectl get nodes
+kubectl describe nodes -l agentpool=npsystem | grep -i topology.kubernetes.io/zone
+kubectl get nodes -l purpose=elastic
+kubectl describe nodes -l purpose=elastic | grep -i topology.kubernetes.io/zone
+kubectl describe nodes -l purpose=elastic | grep -i agentpool
+```
+
+
 ### Kubernetes Cluster Deployment
 
 > Note: Bicep Conversion is not yet complete. Use CLI Process.
