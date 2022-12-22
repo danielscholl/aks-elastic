@@ -39,12 +39,14 @@ cd aks-elastic
 
 #### 2. Deploy the infrastructure to your azure subscription
 
+> _Optional_ - Look for and ensure VM Support for the desired VM Size in the Region.
+  `az vm list-skus --location $AZURE_LOCATION --size Standard_D --all --output table |grep none`
+
+
+
 ```bash
 RESOURCE_GROUP='elastic-playground'
 AZURE_LOCATION='eastus'
-
-# Look for and ensure VM Support for the desired VM Size in the Region.
-az vm list-skus --location $AZURE_LOCATION --size Standard_D --all --output table |grep none
 
 az group create --name $RESOURCE_GROUP --location $AZURE_LOCATION
 DEPLOYMENT=$(az deployment group create -g $RESOURCE_GROUP -f main.bicep -o json)
@@ -73,5 +75,5 @@ ElasticSearch has 3 main components that make up the cluster Client/Coordinating
 3. **Data Nodes** this is where the magic is, this is where the indices are stored and replicated. this would be our Statefulset with persistent volume to persist the data.
 
 Here is how the cluster will look like
-![ES Cluster](es-cluster.png)
+![ES Cluster](images/es-cluster.png)
 
