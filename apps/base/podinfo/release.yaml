@@ -4,7 +4,7 @@ metadata:
   name: podinfo
 spec:
   releaseName: podinfo
-  serviceAccountName: sample-app
+  serviceAccountName: flux-system
   chart:
     spec:
       chart: podinfo
