@@ -37,7 +37,7 @@ module aksconst 'aks-construction/bicep/main.bicep' = {
     JustUseSystemPool: false
 
     // Scale Default User Pool to 0
-    agentCount: 3
+    agentCount: 2
     agentCountMax: 3
     agentVMSize: 'Standard_DS2_v2'
     osDiskType: 'Managed'
