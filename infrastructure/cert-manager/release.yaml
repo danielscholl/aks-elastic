@@ -5,6 +5,7 @@ metadata:
   namespace: cert-manager
 spec:
   interval: 1h0m0s
+  targetNamespace: cert-manager
   chart:
     spec:
       chart: cert-manager
@@ -13,7 +14,6 @@ spec:
         kind: HelmRepository
         name: jetstack
         namespace: cert-manager
-  targetNamespace: cert-manager
   install:
     remediation:
       retries: 3
