@@ -37,9 +37,15 @@ module aksconst 'aks-construction/bicep/main.bicep' = {
     JustUseSystemPool: false
 
     // Scale Default User Pool to 0
-    agentCount: 1
+    agentCount: 3
+    agentCountMax: 3
     agentVMSize: 'Standard_DS2_v2'
     osDiskType: 'Managed'
+    availabilityZones: [
+      '1'
+      '2'
+      '3'
+    ]
 
     // Enable Flux
     fluxGitOpsAddon: true
@@ -112,6 +118,11 @@ module flux 'aks-construction/samples/flux/configpatterns/fluxConfig-InfraAndApp
     fluxRepoInfraPath: './infrastructure'
     fluxRepoAppsPath: './apps/production'
   }
+  dependsOn: [
+    nodepool1
+    nodepool2
+    nodepool3
+  ]
 }
 
 output aksClusterName string = aksconst.outputs.aksClusterName
