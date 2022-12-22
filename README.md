@@ -26,10 +26,7 @@ This repository contains a playground for working with Elastic Search.
 Using [AKS Construction](https://github.com/Azure/Aks-Construction), we can quickly set up an AKS cluster to the correct configuration. It has been referenced as a git submodule, and therefore easily consumed in [this projects bicep infrastructure file](main.bicep).
 
 The main.bicep deployment creates
-- 1 AKS Cluster, with CSI Secrets Managed Identity
-- 5 Azure Key Vaults
-- 3 User Assigned Managed Identities
-- The Azure Workload Identity Mutating Admission Webhook on the AKS cluster
+- 1 AKS Cluster, with Monitoring, Policy and Flux enabled.
 
 ### Guide
 
