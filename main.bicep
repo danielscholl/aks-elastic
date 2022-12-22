@@ -59,7 +59,8 @@ module nodepool1 'aks-construction/bicep/aksagentpool.bicep' = {
     subnetId: ''
     nodeTaints: ['app=elasticsearch:NoSchedule']
     nodeLabels: {
-      purpose: 'elastic'
+      app: 'elasticsearch'
+      costcenter: 'dev'
     }
   }
 }
@@ -76,7 +77,8 @@ module nodepool2 'aks-construction/bicep/aksagentpool.bicep' = {
     subnetId: ''
     nodeTaints: ['app=elasticsearch:NoSchedule']
     nodeLabels: {
-      purpose: 'elastic'
+      app: 'elasticsearch'
+      costcenter: 'dev'
     }
   }
 }
@@ -94,7 +96,8 @@ module nodepool3 'aks-construction/bicep/aksagentpool.bicep' = {
     subnetId: ''
     nodeTaints: ['app=elasticsearch:NoSchedule']
     nodeLabels: {
-      purpose: 'elastic'
+      app: 'elasticsearch'
+      costcenter: 'dev'
     }
   }
 }
@@ -107,7 +110,7 @@ module flux 'aks-construction/samples/flux/configpatterns/fluxConfig-InfraAndApp
     aksFluxAddOnReleaseNamespace: aksconst.outputs.fluxReleaseNamespace
     fluxConfigRepo: 'https://github.com/danielscholl/aks-elastic'
     fluxRepoInfraPath: './infrastructure'
-    fluxRepoAppsPath: './apps/staging'
+    fluxRepoAppsPath: './apps/production'
   }
 }
 
