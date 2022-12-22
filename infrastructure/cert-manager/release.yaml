@@ -19,5 +19,6 @@ spec:
       retries: 3
   values:
     installCRDs: true
+    serviceAccount.create: true
     extraArgs:
     - --enable-certificate-owner-ref=true
