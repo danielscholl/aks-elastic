@@ -4,3 +4,4 @@ namespace: elastic-system
 resources:
   - namespace.yaml
   - source.yaml
+  - storageclass.yaml
