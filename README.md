@@ -60,6 +60,13 @@ kubectl describe nodes -l agentpool=npsystem | grep -i topology.kubernetes.io/zo
 kubectl get nodes -l purpose=elastic
 kubectl describe nodes -l purpose=elastic | grep -i topology.kubernetes.io/zone
 kubectl describe nodes -l purpose=elastic | grep -i agentpool
+
+kubectl -n nginx port-forward svc/nginx-ingress-controller 8080:80 &
+curl -H "Host: podinfo.staging" http://localhost:8080
+{
+  "hostname": "podinfo-59489db7b5-lmwpn",
+  "version": "6.2.3"
+}
 ```
 
 ## Elastice Search
