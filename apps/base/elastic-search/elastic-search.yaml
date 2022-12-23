@@ -60,12 +60,10 @@ spec:
         #      matchLabels:
         #        elasticsearch.k8s.elastic.co/cluster-name: elasticsearch-sample
         #        elasticsearch.k8s.elastic.co/statefulset-name: elasticsearch-sample-es-default
+        nodeSelector:
+          app: elasticsearch
     count: 3
-    tolerations:
-    - key: "app"
-      operator: "Equal"
-      value: "elasticsearch"
-      effect: "NoSchedule"
+
   #   # request 2Gi of persistent data storage for pods in this topology element
   #   volumeClaimTemplates:
   #   - metadata:
