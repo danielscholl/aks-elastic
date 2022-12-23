@@ -9,7 +9,7 @@ metadata:
 apiVersion: source.toolkit.fluxcd.io/v1beta1
 kind: GitRepository
 metadata:
-  name: eck-operator
+  name: elastic-operator
   namespace: elastic-system
 spec:
   interval: 5m
