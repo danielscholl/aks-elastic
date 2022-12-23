@@ -11,9 +11,9 @@ metadata:
 spec:
   version: 8.5.0
   http:
-  tls:
-    selfSignedCertificate:
-      disabled: true
+    tls:
+      selfSignedCertificate:
+        disabled: true
   service:
     spec:
       type: ClusterIP
