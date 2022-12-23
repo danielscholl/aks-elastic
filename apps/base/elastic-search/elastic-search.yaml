@@ -1,0 +1,42 @@
+# This sample sets up an Elasticsearch cluster with 3 nodes.
+apiVersion: elasticsearch.k8s.elastic.co/v1
+kind: Elasticsearch
+
+metadata:
+  # uncomment the lines below to copy the specified node labels as pod annotations and use it as an environment variable in the Pods
+  #annotations:
+  #  eck.k8s.elastic.co/downward-node-labels: "topology.kubernetes.io/zone"
+  name: elasticsearch-sample
+  namespace: elastic-search
+spec:
+  version: 8.5.0
+  http:
+  tls:
+    selfSignedCertificate:
+      disabled: true
+  service:
+    spec:
+      type: ClusterIP
+  nodeSets:
+  - name: master
+    count: 3
+    config:
+      node.roles: ["master"]
+      node.remote_cluster_client: false
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: topology.kubernetes.io/zone
+            operator: In
+            values:
+            - southcentral-1    # THIS DEPENDS ON LOCATION
+            - southcentral-2    # THIS DEPENDS ON LOCATION
+            - southcentral-3    # THIS DEPENDS ON LOCATION
+        - matchExpressions:
+          - key: agentpool
+            operator: In
+            values:
+            - espoolz1
+            - espoolz2
+            - espoolz3
