@@ -36,6 +36,10 @@ spec:
         ###
         # uncomment the line below if you are using a service mesh such as linkerd2 that uses service account tokens for pod identification.
         # automountServiceAccountToken: true
+        tolerations:
+          - effect: NoSchedule
+            key: app
+            value: 'elasticsearch'
         containers:
         - name: elasticsearch
           # specify resource limits and requests
@@ -60,8 +64,6 @@ spec:
         #      matchLabels:
         #        elasticsearch.k8s.elastic.co/cluster-name: elasticsearch-sample
         #        elasticsearch.k8s.elastic.co/statefulset-name: elasticsearch-sample-es-default
-        nodeSelector:
-          app: elasticsearch
     count: 3
 
   #   # request 2Gi of persistent data storage for pods in this topology element
