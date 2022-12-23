@@ -23,7 +23,6 @@ spec:
       metadata:
         labels:
           # additional labels for pods
-          app: elasticsearch:NoSchedule
       spec:
         # this changes the kernel setting on the node to allow ES to use mmap
         # if you uncomment this init container you will likely also want to remove the
@@ -62,6 +61,11 @@ spec:
         #        elasticsearch.k8s.elastic.co/cluster-name: elasticsearch-sample
         #        elasticsearch.k8s.elastic.co/statefulset-name: elasticsearch-sample-es-default
     count: 3
+    tolerations:
+    - key: "app"
+      operator: "Equal"
+      value: "elasticsearch"
+      effect: "NoSchedule"
   #   # request 2Gi of persistent data storage for pods in this topology element
   #   volumeClaimTemplates:
   #   - metadata:
