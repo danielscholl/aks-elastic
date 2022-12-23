@@ -16,7 +16,7 @@ var configuration = {
 }
 
 //---------Kubernetes Construction---------
-module aksconst 'aks-construction/bicep/main.bicep' = {
+module aksconst 'bicep/main.bicep' = {
   name: 'aksconstruction'
   params: {
     resourceName: configuration.name
@@ -52,7 +52,7 @@ module aksconst 'aks-construction/bicep/main.bicep' = {
   }
 }
 
-module nodepool1 'aks-construction/bicep/aksagentpool.bicep' = {
+module nodepool1 'bicep/aksagentpool.bicep' = {
   name: 'nodepool1'
   params: {
     AksName: aksconst.outputs.aksClusterName
@@ -70,7 +70,7 @@ module nodepool1 'aks-construction/bicep/aksagentpool.bicep' = {
     }
   }
 }
-module nodepool2 'aks-construction/bicep/aksagentpool.bicep' = {
+module nodepool2 'bicep/aksagentpool.bicep' = {
   name: 'nodepool2'
   params: {
     AksName: aksconst.outputs.aksClusterName
@@ -89,7 +89,7 @@ module nodepool2 'aks-construction/bicep/aksagentpool.bicep' = {
   }
 }
 
-module nodepool3 'aks-construction/bicep/aksagentpool.bicep' = {
+module nodepool3 'bicep/aksagentpool.bicep' = {
   name: 'nodepool3'
   params: {
     AksName: aksconst.outputs.aksClusterName
@@ -109,7 +109,7 @@ module nodepool3 'aks-construction/bicep/aksagentpool.bicep' = {
 }
 
 //--------------Flux Config---------------
-module flux 'aks-construction/samples/flux/configpatterns/fluxConfig-InfraAndApps.bicep' = {
+module flux 'bicep/fluxConfig-InfraAndApps.bicep' = {
   name: 'flux'
   params: {
     aksName: aksconst.outputs.aksClusterName

@@ -1,3 +1,0 @@
-[submodule "aks-construction"]
-	path = aks-construction
-	url = https://github.com/Azure/AKS-Construction
