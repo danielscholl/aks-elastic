@@ -58,7 +58,7 @@ jobs:
                 New-Item -ItemType Directory -Force -Path $compiledir
           }
 
-          /home/runner/.azure/bin/bicep build bicep/main.bicep --outdir $compiledir
+          /home/runner/.azure/bin/bicep build main.bicep --outdir $compiledir
 
       - uses: actions/checkout@v2
         if: github.event_name != 'push'
@@ -66,20 +66,6 @@ jobs:
         with:
           path: old
           ref: ${{ github.event.pull_request.base.sha }}
-
-      - name: Bicep build (old)
-        shell: pwsh
-        run: |
-          #write-output $pwd
-          $compiledir=Join-Path -Path $pwd -ChildPath "old/bicep/compiled"
-
-          write-output $compiledir
-          If(!(test-path $compiledir))
-          {
-                New-Item -ItemType Directory -Force -Path $compiledir
-          }
-
-          /home/runner/.azure/bin/bicep build bicep/main.bicep --outdir $compiledir
 
 
       - name: Check for Parameter changes in main.json
@@ -101,7 +87,6 @@ jobs:
           write-output $comparison
 
           if ($comparison.length -gt 0) {
-              #cd old #Need to change directory to give the gh cli repo context
 
               #GitHub uses a markdown rendering tool called Glamour. It copes with HTML pretty well, and pwsh loves html not markdown.
               [string]$html = $comparison | sort-object Parameter, @{e='FileVersion';desc=$true} | ConvertTo-Html -Fragment | Out-String
