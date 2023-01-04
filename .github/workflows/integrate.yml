@@ -181,7 +181,9 @@ jobs:
             echo "RESOURCE_GROUP is $RESOURCE_GROUP"
             echo "LOCATION is $LOCATION"
 
-            EXISTING=$(az group show --name $RESOURCE_GROUP 2>/dev/null)
+            az group list --query  "[?name=='$RESOURCE_GROUP'].[name]" -otsv
+
+            EXISTING=$(az group list --query  "[?name=='$RESOURCE_GROUP'].[name]" -otsv)
             echo "Existing is $EXISTING"
 
             if [ "$EXISTING"  == "" ]
