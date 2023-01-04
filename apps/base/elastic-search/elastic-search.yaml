@@ -1,18 +1,19 @@
 ---
-apiVersion: autoscaling.k8s.elastic.co/v1alpha1
-kind: ElasticsearchAutoscaler
-metadata:
-  name: autoscaling
-spec:
-  elasticsearchRef:
-    name: elasticsearch-ha
-  policies:
-    - name: master
-      roles: ["master"]
-      resources:
-        nodeCount:
-          min: 3
-          max: 5
+# This is an enterprise feature.
+# apiVersion: autoscaling.k8s.elastic.co/v1alpha1
+# kind: ElasticsearchAutoscaler
+# metadata:
+#   name: autoscaling
+# spec:
+#   elasticsearchRef:
+#     name: elasticsearch-ha
+#   policies:
+#     - name: master
+#       roles: ["master"]
+#       resources:
+#         nodeCount:
+#           min: 3
+#           max: 5
 ---
 # This sets up an Elasticsearch cluster with 3 nodes.
 apiVersion: elasticsearch.k8s.elastic.co/v1
