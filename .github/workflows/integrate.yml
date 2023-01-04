@@ -171,7 +171,6 @@ jobs:
 
       - name: Verify Resource Group Exists
         id: hasResourceGroup
-        if: github.event.inputs.doVerifySteps == 'true'
         env:
           RESOURCE_GROUP: ${{ steps.params.outputs.RESOURCEGROUP }}
           LOCATION: ${{ steps.params.outputs.REGION }}
@@ -179,11 +178,16 @@ jobs:
         with:
           azcliversion: ${{ env.AZCLIVERSION }}
           inlineScript: |
+            echo "RESOURCE_GROUP is $RESOURCE_GROUP"
+            echo "LOCATION is $LOCATION"
+
             EXISTING=$(az group show --name $RESOURCE_GROUP 2>/dev/null)
+            echo "Existing is $EXISTING"
+
             if [ "$EXISTING"  == "" ]
               then
                 echo "Creating Resource Group $RESOURCE_GROUP"
-                az group create --name $RESOURCE_GROUP --location $LOCATION
+                #az group create --name $RESOURCE_GROUP --location $LOCATION
               else
                 echo "Resource Group $RESOURCE_GROUP exists"
             fi
