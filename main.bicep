@@ -8,10 +8,10 @@ param location string =  resourceGroup().location
 var configuration = {
   name: 'instance'
   gitops: {
-    name: 'sample-stamp'
-    url: 'https://github.com/danielscholl/gitops-sample-stamp'
+    url: 'https://github.com/danielscholl/aks-elastic'
     tag: 'v0.0.1'
-    path: './clusters/sample-stamp'
+    infra: './infrastructure'
+    apps: './apps/production'
   }
 }
 
@@ -114,9 +114,9 @@ module flux 'bicep/fluxConfig-InfraAndApps.bicep' = {
   params: {
     aksName: aksconst.outputs.aksClusterName
     aksFluxAddOnReleaseNamespace: aksconst.outputs.fluxReleaseNamespace
-    fluxConfigRepo: 'https://github.com/danielscholl/aks-elastic'
-    fluxRepoInfraPath: './infrastructure'
-    fluxRepoAppsPath: './apps/production'
+    fluxConfigRepo: configuration.gitops.url
+    fluxRepoInfraPath: configuration.gitops.infra
+    fluxRepoAppsPath: configuration.gitops.apps
   }
   dependsOn: [
     nodepool1
