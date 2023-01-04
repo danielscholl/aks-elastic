@@ -31,7 +31,7 @@ on:
         type: string
         required: false
       region:
-        description: 'Region (needs to be same as byo vnet location)'
+        description: 'Region'
         default: 'southcentralus'
         type: string
         required: false
@@ -169,6 +169,24 @@ jobs:
           Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
           Install-Module -Name Az.KeyVault -Force
 
+      - name: Verify Resource Group Exists
+        id: hasResourceGroup
+        if: github.event.inputs.doVerifySteps == 'true'
+        env:
+          RESOURCE_GROUP: ${{ steps.params.outputs.RESOURCEGROUP }}
+        uses: Azure/cli@1.0.4
+        with:
+          azcliversion: ${{ env.AZCLIVERSION }}
+          inlineScript: |
+            EXISTING=$(az group show --name $RESOURCE_GROUP 2>/dev/null)
+            if [ "$EXISTING"  == "" ]
+              then
+                echo "Creating Resource Group $RESOURCE_GROUP"
+                az group create --name $RESOURCE_GROUP --location $REGION
+              else
+                echo "Resource Group $RESOURCE_GROUP exists"
+            fi
+
       - name: Verify any active Azure Resource Group Deployments #These can mess up our deployment
         id: activedeps
         if: github.event.inputs.doVerifySteps == 'true'
@@ -180,11 +198,6 @@ jobs:
           inlineScript: |
             echo "AZ CLI version"
             az version
-            EXISTING=$(az group show --name $RESOURCE_GROUP 2>/dev/null)
-            if [ "$EXISTING"  == "" ]
-              then
-                az group create --name $RESOURCE_GROUP --location $REGION
-            fi
 
             RUNCOUNT=$(az deployment group list -g $RESOURCE_GROUP --query "[?properties.provisioningState=='Running'].[properties.provisioningState, name] | length(@)" -o tsv)
             echo "Active deployments : $RUNCOUNT"
