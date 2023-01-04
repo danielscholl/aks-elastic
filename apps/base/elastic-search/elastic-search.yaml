@@ -13,21 +13,6 @@ spec:
         nodeCount:
           min: 3
           max: 5
-        cpu:
-          min: 2
-          max: 8
-        memory:
-          min: 2Gi
-          max: 16Gi
-        storage:
-          min: 64Gi
-          max: 512Gi
-    - name: master
-      roles: ["master"]
-      resources:
-        nodeCount:
-          min: 3
-          max: 5
 ---
 # This sets up an Elasticsearch cluster with 3 nodes.
 apiVersion: elasticsearch.k8s.elastic.co/v1
