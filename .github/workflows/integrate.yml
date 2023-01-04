@@ -9,14 +9,14 @@ on:
     paths:
       - "main.bicep"
       - "bicep/**/*"
-      - ".github/workflows/workflows_dep/parameters.json"
+      - ".github/workflows_dep/parameters.json"
 
   pull_request:
     branches: [main]
     paths:
       - "main.bicep"
       - "bicep/**/*"
-      - ".github/workflows/workflows_dep/parameters.json"
+      - ".github/workflows_dep/parameters.json"
 
 
   schedule:
@@ -123,9 +123,12 @@ jobs:
           if (Test-Path $paramFilePath) {
             $paramFileContent=Get-Content $paramFilePath
             Write-Output $paramFileContent
+
+            <# <-- Uncomment this to Test Pulling a Parameter
             Write-Output "Test Pulling a param (storageAccountType)"
             $params=$paramFileContent|ConvertFrom-Json
             Write-Output $params.parameters.storageAccountType.value
+            #>
           }
 
       - name: Parameter Value Augmentation
@@ -222,6 +225,7 @@ jobs:
           if ($registeringfeatures.count -gt 0) {
             Write-Error "There are still features registering"
           } else { Write-Output "-- All good, no features in the process of registering" }
+
           write-output 'Check specific features.'
           $paramFilePath="${{ env.ParamFilePath }}"
           $paramFileContent=Get-Content $paramFilePath
