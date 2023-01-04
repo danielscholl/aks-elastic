@@ -37,12 +37,6 @@ spec:
                   - eastus-1    # THIS DEPENDS ON LOCATION
                   - eastus-2    # THIS DEPENDS ON LOCATION
                   - eastus-3    # THIS DEPENDS ON LOCATION
-        containers:
-          - name: elasticsearch
-            resources:
-              limits:
-                memory: 4Gi
-                cpu: 2
         env:
           - name: ES_JAVA_OPTS
             value: "-Xms2g -Xmx2g"
@@ -78,12 +72,6 @@ spec:
                   - eastus-1    # THIS DEPENDS ON LOCATION
                   - eastus-2    # THIS DEPENDS ON LOCATION
                   - eastus-3    # THIS DEPENDS ON LOCATION
-        containers:
-          - name: elasticsearch
-            resources:
-              limits:
-                memory: 4Gi
-                cpu: 2
         env:
           - name: ES_JAVA_OPTS
             value: "-Xms2g -Xmx2g"
@@ -119,12 +107,6 @@ spec:
                   - eastus-1    # THIS DEPENDS ON LOCATION
                   - eastus-2    # THIS DEPENDS ON LOCATION
                   - eastus-3    # THIS DEPENDS ON LOCATION
-        containers:
-          - name: elasticsearch
-            resources:
-              limits:
-                memory: 4Gi
-                cpu: 2
         env:
           - name: ES_JAVA_OPTS
             value: "-Xms2g -Xmx2g"
