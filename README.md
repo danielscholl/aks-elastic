@@ -1,6 +1,6 @@
-# Deploy a Stateful Elastic Search Workload on Kubernetes
+# Stateful Elastic Search Workload on Kubernetes
 
-This repository contains a playground for working with Elastic Search.
+This repository will deploy a stateful elastic search instance on kubernetes leveraging managed application capabilities.
 
 [![Deploy to Azure](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fdanielscholl%2Faks-elastic%2Fmain%2Fazuredeploy.json)
 
@@ -12,11 +12,10 @@ This repository contains a playground for working with Elastic Search.
 - Enabled uptime SLA
 - System Node Pool (no state)
 - User Node Pool (state)
-- Tainted User Node Pools
+- Tainted Elastic Node Pools
 - Auto-scaling
 - CNI Networking
 - Ephemeral Disks for Node OS
-- Managed Identities
 - Cluster Monitoring
 
 ![ES AKS Cluster](images/es-aks-cluster.png)
@@ -24,12 +23,14 @@ This repository contains a playground for working with Elastic Search.
 
 ### Installation
 
-#### AKS
+#### Service Definition
 
-Using [AKS Construction](https://github.com/Azure/Aks-Construction), we can quickly set up an AKS cluster to the correct configuration. It has been referenced as a git submodule, and therefore easily consumed in [this projects bicep infrastructure file](main.bicep).
+Use the deploy to Azure button which creates a service definition, then deploy instances of the Elastic Stamp using the service definition.
+
+#### Manual Deployment
 
 The main.bicep deployment creates
-- 1 AKS Cluster, with Monitoring, Policy and Flux enabled.
+- 1 AKS Cluster with Monitoring, Policy and Flux enabled.
 
 ### Guide
 
@@ -44,7 +45,6 @@ cd aks-elastic
 
 > _Optional_ - Look for and ensure VM Support for the desired VM Size in the Region.
   `az vm list-skus --location $AZURE_LOCATION --size Standard_D --all --output table |grep none`
-
 
 
 ```bash
@@ -86,4 +86,3 @@ ElasticSearch has 3 main components that make up the cluster Client/Coordinating
 
 Here is how the cluster will look like
 ![ES Cluster](images/es-cluster.png)
-
