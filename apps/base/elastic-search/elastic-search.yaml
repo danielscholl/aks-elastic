@@ -36,6 +36,24 @@ spec:
           - effect: NoSchedule
             key: app
             value: 'elasticsearch'
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: agentpool
+                  operator: In
+                  values:
+                  - espoolz1
+                  - espoolz2
+                  - espoolz3
+              - matchExpressions:
+                - key: topology.kubernetes.io/zone
+                  operator: In
+                  values:
+                  - eastus-1    # THIS DEPENDS ON LOCATION
+                  - eastus-2    # THIS DEPENDS ON LOCATION
+                  - eastus-3     # THIS DEPENDS ON LOCATION
         containers:
           - name: elasticsearch
             resources:
