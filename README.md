@@ -2,6 +2,9 @@
 
 This repository contains a playground for working with Elastic Search.
 
+[![Deploy to Azure](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fdanielscholl%2Faks-elastic%2Fmain%2Fazuredeploy.json)
+
+
 ## Azure Kubernetes
 
 ### Kubernetes Design
