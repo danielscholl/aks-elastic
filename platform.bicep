@@ -18,7 +18,7 @@ param version string
 
 // This is the naming information for the managed application
 var appDescription = 'Elastic Search'
-var name = 'Elastic Search'
+var name = 'ElasticSearch'
 var displayName = 'Elastic Search'
 
 
