@@ -9,14 +9,14 @@ on:
     paths:
       - "main.bicep"
       - "bicep/**/*"
-      - ".github/workflows_dep/parameters.json"
+      - ".github/workflows/workflows_dep/parameters.json"
 
   pull_request:
     branches: [main]
     paths:
       - "main.bicep"
       - "bicep/**/*"
-      - ".github/workflows_dep/parameters.json"
+      - ".github/workflows/workflows_dep/parameters.json"
 
 
   schedule:
