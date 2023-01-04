@@ -180,6 +180,12 @@ jobs:
           inlineScript: |
             echo "AZ CLI version"
             az version
+            EXISTING=$(az group show --name $RESOURCE_GROUP)
+            if [ "$EXISTING"  == "" ]
+              then
+                az group create --name $RESOURCE_GROUP --location $REGION
+            fi
+
             RUNCOUNT=$(az deployment group list -g $RESOURCE_GROUP --query "[?properties.provisioningState=='Running'].[properties.provisioningState, name] | length(@)" -o tsv)
             echo "Active deployments : $RUNCOUNT"
             echo 'Active deployment list'
