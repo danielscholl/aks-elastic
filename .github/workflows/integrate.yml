@@ -180,7 +180,7 @@ jobs:
           inlineScript: |
             echo "AZ CLI version"
             az version
-            EXISTING=$(az group show --name $RESOURCE_GROUP)
+            EXISTING=$(az group show --name $RESOURCE_GROUP 2>/dev/null)
             if [ "$EXISTING"  == "" ]
               then
                 az group create --name $RESOURCE_GROUP --location $REGION
