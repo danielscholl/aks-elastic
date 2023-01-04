@@ -7,6 +7,7 @@ on:
     branches:
       - main
     paths:
+      - 'main.bicep'
       - 'bicep/*'
 
   workflow_dispatch: #Manual execution will be good for debugging
