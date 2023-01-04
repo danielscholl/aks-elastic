@@ -1,0 +1,13 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/viewdefinition/0.0.1-preview/ViewDefinition.json#",
+  "contentVersion": "0.0.0.1",
+  "views": [
+    {
+      "kind": "Overview",
+      "properties": {
+        "header": "A Managed Application Platform",
+        "description": "This is a playground for Managed Applications with AKS."
+      }
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/0.1.2-preview/CreateUIDefinition.MultiVm.json#",
+  "handler": "Microsoft.Azure.CreateUIDef",
+  "version": "0.1.0-preview",
+  "parameters": {
+    "basics": [],
+    "steps": [
+      {
+        "name": "tags",
+        "label": "Tags",
+        "elements": [
+          {
+            "name": "tagsByResource",
+            "type": "Microsoft.Common.TagsByResource",
+            "resources": [
+              "Microsoft.Resources",
+              "Microsoft.OperationalInsights",
+              "Microsoft.OperationsManagement",
+              "Microsoft.ContainerService",
+              "Microsoft.Compute",
+              "Microsoft.Network",
+              "Microsoft.Storage"
+            ]
+          }
+        ]
+      }
+    ],
+    "outputs": {
+      "tagsByResource": "[steps('tags').tagsByResource]"
+    }
+  }
+}
