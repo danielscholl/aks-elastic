@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.13.1.58284",
-      "templateHash": "15246860794215912865"
+      "templateHash": "7360750405547677959"
     }
   },
   "parameters": {
@@ -42,7 +42,7 @@
   },
   "variables": {
     "appDescription": "Elastic Search",
-    "name": "Elastic Search",
+    "name": "ElasticSearch",
     "displayName": "Elastic Search",
     "roleDefinitionId": "8e3af657-a8ff-443c-a75c-2fe8c4bcb635",
     "packageFileUri": "[format('https://github.com/danielscholl/aks-elastic/releases/download/v{0}/ama.zip', parameters('version'))]",
