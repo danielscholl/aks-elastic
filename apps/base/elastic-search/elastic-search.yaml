@@ -1,20 +1,3 @@
----
-# This is an enterprise feature.
-# apiVersion: autoscaling.k8s.elastic.co/v1alpha1
-# kind: ElasticsearchAutoscaler
-# metadata:
-#   name: autoscaling
-# spec:
-#   elasticsearchRef:
-#     name: elasticsearch-ha
-#   policies:
-#     - name: master
-#       roles: ["master"]
-#       resources:
-#         nodeCount:
-#           min: 3
-#           max: 5
----
 # This sets up an Elasticsearch cluster with 3 nodes.
 apiVersion: elasticsearch.k8s.elastic.co/v1
 kind: Elasticsearch
@@ -53,7 +36,7 @@ spec:
                   values:
                   - eastus-1    # THIS DEPENDS ON LOCATION
                   - eastus-2    # THIS DEPENDS ON LOCATION
-                  - eastus-3     # THIS DEPENDS ON LOCATION
+                  - eastus-3    # THIS DEPENDS ON LOCATION
         containers:
           - name: elasticsearch
             resources:
@@ -77,6 +60,33 @@ spec:
           - effect: NoSchedule
             key: app
             value: 'elasticsearch'
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: agentpool
+                  operator: In
+                  values:
+                  - espoolz1
+                  - espoolz2
+                  - espoolz3
+              - matchExpressions:
+                - key: topology.kubernetes.io/zone
+                  operator: In
+                  values:
+                  - eastus-1    # THIS DEPENDS ON LOCATION
+                  - eastus-2    # THIS DEPENDS ON LOCATION
+                  - eastus-3    # THIS DEPENDS ON LOCATION
+        containers:
+          - name: elasticsearch
+            resources:
+              limits:
+                memory: 4Gi
+                cpu: 2
+        env:
+          - name: ES_JAVA_OPTS
+            value: "-Xms2g -Xmx2g"
 
 
   - name: data
@@ -91,3 +101,30 @@ spec:
           - effect: NoSchedule
             key: app
             value: 'elasticsearch'
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: agentpool
+                  operator: In
+                  values:
+                  - espoolz1
+                  - espoolz2
+                  - espoolz3
+              - matchExpressions:
+                - key: topology.kubernetes.io/zone
+                  operator: In
+                  values:
+                  - eastus-1    # THIS DEPENDS ON LOCATION
+                  - eastus-2    # THIS DEPENDS ON LOCATION
+                  - eastus-3    # THIS DEPENDS ON LOCATION
+        containers:
+          - name: elasticsearch
+            resources:
+              limits:
+                memory: 4Gi
+                cpu: 2
+        env:
+          - name: ES_JAVA_OPTS
+            value: "-Xms2g -Xmx2g"
