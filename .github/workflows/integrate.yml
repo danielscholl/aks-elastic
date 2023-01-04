@@ -32,7 +32,7 @@ on:
         required: false
       region:
         description: 'Region'
-        default: 'southcentralus'
+        default: 'eastus'
         type: string
         required: false
       doStandards:

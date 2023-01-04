@@ -31,7 +31,7 @@ jobs:
       - name: Build Managed App Deployment
         uses: Azure/bicep-build-action@v1.0.0
         with:
-          bicepFilePath: main.bicep
+          bicepFilePath: platform.bicep
           outputFilePath: azuredeploy.json
 
       - name: Github Checkin
