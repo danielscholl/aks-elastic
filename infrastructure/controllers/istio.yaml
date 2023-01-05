@@ -22,6 +22,7 @@ metadata:
   namespace: istio-system
 spec:
   releaseName: istio-base
+  targetNamespace: istio-system
   chart:
     spec:
       chart: manifests/charts/base
