@@ -2,7 +2,7 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
-  name: infra-controllers-certs
+  name: software-component-certificates
   namespace: flux-system
 spec:
   interval: 1h
@@ -22,11 +22,11 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
-  name: infra-controllers-istio
+  name: software-component-istio
   namespace: flux-system
 spec:
   dependsOn:
-    - name: infra-controllers-certs
+    - name: software-component-certificates
   interval: 1h
   retryInterval: 1m
   timeout: 5m
@@ -44,18 +44,18 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
-  name: infra-controllers-istio-profile
+  name: software-configuration-istio
   namespace: flux-system
 spec:
   dependsOn:
-    - name: infra-controllers-istio
+    - name: software-component-istio
   interval: 1h
   retryInterval: 1m
   timeout: 5m
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./software/components/istio-profile
+  path: ./software/configuration/istio-profile
   prune: true
   healthChecks:
     - kind: Deployment
@@ -68,11 +68,11 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
-  name: infra-controllers-elastic
+  name: software-component-elastic
   namespace: flux-system
 spec:
   dependsOn:
-    - name: infra-controllers-istio-profile
+    - name: software-configuration-istio
   interval: 1h
   retryInterval: 1m
   timeout: 5m
@@ -90,16 +90,16 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
-  name: infra-configs
+  name: software-configuration-elastic
   namespace: flux-system
 spec:
   dependsOn:
-    - name: infra-controllers-elastic
+    - name: software-component-elastic
   interval: 1h
   retryInterval: 1m
   timeout: 5m
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./software/configuration
+  path: ./software/configuration/elastic
   prune: true
