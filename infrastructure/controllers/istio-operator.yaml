@@ -22,12 +22,11 @@ metadata:
   namespace: istio-system
 spec:
   releaseName: istio-base
-  targetNamespace: istio-system
   chart:
     spec:
       chart: manifests/charts/base
       sourceRef:
-        kind: GitRepository
+        kind: HelmRepository
         name: istio
         namespace: istio-system
   interval: 1h0m0s
