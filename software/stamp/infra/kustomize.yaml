@@ -64,28 +64,28 @@ spec:
     - kind: Deployment
       name: istio-ingressgateway
       namespace: istio-system
-# ---
-# apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
-# kind: Kustomization
-# metadata:
-#   name: infra-controllers-elastic
-#   namespace: flux-system
-# spec:
-#   dependsOn:
-#     - name: infra-controllers-istio-profile
-#   interval: 1h
-#   retryInterval: 1m
-#   timeout: 5m
-#   sourceRef:
-#     kind: GitRepository
-#     name: flux-system
-#   path: ./software/controllers/elastic-operator.yaml
-#   prune: true
-#   wait: true
-#   healthChecks:
-#     - kind: StatefulSet
-#       name: elastic-system
-#       namespace: elastic-operator
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: infra-controllers-elastic
+  namespace: flux-system
+spec:
+  dependsOn:
+    - name: infra-controllers-istio-profile
+  interval: 1h
+  retryInterval: 1m
+  timeout: 5m
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  path: ./software/controllers/elastic-operator.yaml
+  prune: true
+  wait: true
+  healthChecks:
+    - kind: StatefulSet
+      name: elastic-system
+      namespace: elastic-operator
 # ---
 # apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 # kind: Kustomization
