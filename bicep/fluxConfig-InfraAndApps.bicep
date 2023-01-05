@@ -12,7 +12,7 @@ param fluxConfigRepo string = '' //'https://github.com/Azure/gitops-flux2-kustom
 param fluxConfigRepoBranch string = 'main'
 
 @description('The name of the flux configuration to apply')
-param fluxConfigName string = 'fluxsetup'
+param fluxConfigName string = 'flux-system'
 var cleanFluxConfigName = toLower(fluxConfigName)
 
 @secure()
@@ -25,8 +25,8 @@ var fluxRepoUsernameB64 = base64(fluxRepoUsername)
 param fluxRepoPassword string = ''
 var fluxRepoPasswordB64 = base64(fluxRepoPassword)
 
-param fluxRepoInfraPath string = './infrastructure'
-param fluxRepoAppsPath string = './apps/staging'
+param fluxRepoInfraPath string = './stamp/infrastructure.yaml'
+param fluxRepoAppsPath string = './stamp/apps.yaml'
 
 resource fluxConfig 'Microsoft.KubernetesConfiguration/fluxConfigurations@2022-03-01' = {
   scope: aks
