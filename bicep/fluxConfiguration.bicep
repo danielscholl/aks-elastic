@@ -58,7 +58,7 @@ resource fluxConfig 'Microsoft.KubernetesConfiguration/fluxConfigurations@2022-0
       applications: {
         path: fluxRepoApplicationssPath
         dependsOn: [
-          'infra'
+          'components'
         ]
         timeoutInSeconds: 300
         syncIntervalInSeconds: 300
