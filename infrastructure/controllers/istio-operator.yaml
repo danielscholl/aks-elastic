@@ -45,7 +45,7 @@ spec:
     spec:
       chart: manifests/charts/istio-operator
       sourceRef:
-        kind: GitRepository
+        kind: HelmRepository
         name: istio
         namespace: istio-system
   interval: 1h0m0s
