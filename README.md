@@ -10,10 +10,10 @@ This repository will deploy a stateful elastic search instance on kubernetes lev
 ### Kubernetes Design
 
 - Enabled uptime SLA
-- System Node Pool (no state)
-- User Node Pool (state)
-- Tainted Elastic Node Pools
-- Auto-scaling
+- System Node Pool (CriticalAddonsOnly)
+- User Node Pool (no state)
+- Tainted Elastic Node Pool (state)
+- Auto-scaling (Nodes not elastic)
 - CNI Networking
 - Ephemeral Disks for Node OS
 - Cluster Monitoring
@@ -25,12 +25,11 @@ This repository will deploy a stateful elastic search instance on kubernetes lev
 
 #### Service Definition
 
-Use the deploy to Azure button which creates a service definition, then deploy instances of the Elastic Stamp using the service definition.
+Use the deploy to Azure button which creates a service definition, then deploy instances of the Elastic Stamp from the service definition.
 
 #### Manual Deployment
 
-The main.bicep deployment creates
-- 1 AKS Cluster with Monitoring, Policy and Flux enabled.
+The main.bicep deployment creates an AKS cluster with monitoring, policy and flux enabled.
 
 ### Guide
 
