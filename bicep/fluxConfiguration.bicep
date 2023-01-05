@@ -25,8 +25,8 @@ var fluxRepoUsernameB64 = base64(fluxRepoUsername)
 param fluxRepoPassword string = ''
 var fluxRepoPasswordB64 = base64(fluxRepoPassword)
 
-param fluxRepoInfraPath string = './stamp/infrastructure.yaml'
-param fluxRepoAppsPath string = './stamp/apps.yaml'
+param fluxRepoComponentsPath string = './stamp/components'
+param fluxRepoApplicationssPath string = './stamp/applications'
 
 resource fluxConfig 'Microsoft.KubernetesConfiguration/fluxConfigurations@2022-03-01' = {
   scope: aks
@@ -48,15 +48,15 @@ resource fluxConfig 'Microsoft.KubernetesConfiguration/fluxConfigurations@2022-0
       password: fluxRepoPasswordB64
     } : {}
     kustomizations: {
-      infra: {
-        path: fluxRepoInfraPath
+      components: {
+        path: fluxRepoComponentsPath
         timeoutInSeconds: 300
         syncIntervalInSeconds: 300
         retryIntervalInSeconds: 300
         prune: true
       }
-      apps: {
-        path: fluxRepoAppsPath
+      applications: {
+        path: fluxRepoApplicationssPath
         dependsOn: [
           'infra'
         ]

@@ -10,8 +10,8 @@ var configuration = {
   gitops: {
     url: 'https://github.com/danielscholl/aks-elastic'
     tag: 'v0.0.1'
-    infra: './software/stamp/infra'
-    apps: './software/stamp/apps'
+    components: './stamp/components'
+    applications: './stamp/applications'
   }
 }
 
@@ -112,14 +112,14 @@ module nodepool3 'bicep/aksagentpool.bicep' = {
 }
 
 //--------------Flux Config---------------
-module flux 'bicep/fluxConfig-InfraAndApps.bicep' = {
+module flux 'bicep/fluxConfiguration.bicep' = {
   name: 'flux-config'
   params: {
     aksName: aksconst.outputs.aksClusterName
     aksFluxAddOnReleaseNamespace: aksconst.outputs.fluxReleaseNamespace
     fluxConfigRepo: configuration.gitops.url
-    fluxRepoInfraPath: configuration.gitops.infra
-    fluxRepoAppsPath: configuration.gitops.apps
+    fluxRepoComponentsPath: configuration.gitops.components
+    fluxRepoApplicationssPath: configuration.gitops.applications
   }
   dependsOn: [
     nodepool1

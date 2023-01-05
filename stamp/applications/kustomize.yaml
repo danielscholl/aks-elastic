@@ -11,6 +11,6 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./software/apps/podinfo
+  path: ./software/applications/podinfo
   prune: true
   wait: true
