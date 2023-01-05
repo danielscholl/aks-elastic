@@ -5,6 +5,7 @@ metadata:
   name: elastic-system
   labels:
     toolkit.fluxcd.io/tenant: sre-team
+    istio-injection: enabled
 ---
 apiVersion: source.toolkit.fluxcd.io/v1beta1
 kind: GitRepository
