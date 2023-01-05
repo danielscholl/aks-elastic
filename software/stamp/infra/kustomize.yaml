@@ -11,7 +11,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./software/controllers/cert-manager
+  path: ./software/components/cert-manager
   prune: true
   wait: true
   healthChecks:
@@ -33,7 +33,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./software/controllers/istio-system
+  path: ./software/components/istio-operator
   prune: true
   wait: true
   healthChecks:
@@ -55,7 +55,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./software/controllers/istio-profile
+  path: ./software/components/istio-profile
   prune: true
   healthChecks:
     - kind: Deployment
@@ -79,7 +79,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./software/controllers/elastic-operator
+  path: ./software/components/elastic-operator
   prune: true
   wait: true
   healthChecks:
@@ -101,5 +101,5 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./software/configs
+  path: ./software/configuration
   prune: true
