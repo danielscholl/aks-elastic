@@ -34,9 +34,9 @@ spec:
                 - key: topology.kubernetes.io/zone
                   operator: In
                   values:
-                  - eastus-1    # THIS DEPENDS ON LOCATION
-                  - eastus-2    # THIS DEPENDS ON LOCATION
-                  - eastus-3    # THIS DEPENDS ON LOCATION
+                  - eastus2-1    # THIS DEPENDS ON LOCATION
+                  - eastus2-2    # THIS DEPENDS ON LOCATION
+                  - eastus2-3    # THIS DEPENDS ON LOCATION
         env:
           - name: ES_JAVA_OPTS
             value: "-Xms2g -Xmx2g"
@@ -69,9 +69,9 @@ spec:
                 - key: topology.kubernetes.io/zone
                   operator: In
                   values:
-                  - eastus-1    # THIS DEPENDS ON LOCATION
-                  - eastus-2    # THIS DEPENDS ON LOCATION
-                  - eastus-3    # THIS DEPENDS ON LOCATION
+                  - eastus2-1    # THIS DEPENDS ON LOCATION
+                  - eastus2-2    # THIS DEPENDS ON LOCATION
+                  - eastus2-3    # THIS DEPENDS ON LOCATION
         env:
           - name: ES_JAVA_OPTS
             value: "-Xms2g -Xmx2g"
@@ -111,9 +111,9 @@ spec:
                 - key: topology.kubernetes.io/zone
                   operator: In
                   values:
-                  - eastus-1    # THIS DEPENDS ON LOCATION
-                  - eastus-2    # THIS DEPENDS ON LOCATION
-                  - eastus-3    # THIS DEPENDS ON LOCATION
+                  - eastus2-1    # THIS DEPENDS ON LOCATION
+                  - eastus2-2    # THIS DEPENDS ON LOCATION
+                  - eastus2-3    # THIS DEPENDS ON LOCATION
         env:
           - name: ES_JAVA_OPTS
             value: "-Xms2g -Xmx2g"

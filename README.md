@@ -48,7 +48,7 @@ cd aks-elastic
 
 ```bash
 RESOURCE_GROUP='elastic-playground'
-AZURE_LOCATION='eastus'
+AZURE_LOCATION='eastus2'
 
 az group create --name $RESOURCE_GROUP --location $AZURE_LOCATION
 DEPLOYMENT=$(az deployment group create -g $RESOURCE_GROUP -f main.bicep -o json)
