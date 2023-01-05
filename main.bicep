@@ -32,6 +32,9 @@ module aksconst 'bicep/main.bicep' = {
     // Enable Upgrade
     upgradeChannel: 'node-image'
 
+    // Enable Uptime SLA
+    AksPaidSkuForSLA: true
+
     // Configure System Pool with CriticalAddonsOnly taint
     SystemPoolType: 'Standard'
     JustUseSystemPool: false
@@ -110,7 +113,7 @@ module nodepool3 'bicep/aksagentpool.bicep' = {
 
 //--------------Flux Config---------------
 module flux 'bicep/fluxConfig-InfraAndApps.bicep' = {
-  name: 'flux'
+  name: 'flux-config'
   params: {
     aksName: aksconst.outputs.aksClusterName
     aksFluxAddOnReleaseNamespace: aksconst.outputs.fluxReleaseNamespace

@@ -1376,8 +1376,8 @@ resource aks_admin_role_assignment 'Microsoft.Authorization/roleAssignments@2022
 
 param fluxGitOpsAddon bool = false
 
-resource fluxAddon 'Microsoft.KubernetesConfiguration/extensions@2022-04-02-preview' = if(fluxGitOpsAddon) {
-  name: 'flux'
+resource fluxAddon 'Microsoft.KubernetesConfiguration/extensions@2022-11-01' = if(fluxGitOpsAddon) {
+  name: 'flux-extension'
   scope: aks
   properties: {
     extensionType: 'microsoft.flux'
