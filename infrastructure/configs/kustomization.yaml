@@ -4,5 +4,4 @@ resources:
   - network-policies.yaml
   - storage-class.yaml
   - cluster-issuer.yaml
-  - istio-profile.yaml
   - self-issuer.yaml
