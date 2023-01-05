@@ -5,3 +5,4 @@ resources:
   - storage-class.yaml
   - cluster-issuer.yaml
   - istio-profile.yaml
+  - self-issuer.yaml
