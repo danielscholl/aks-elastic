@@ -10,8 +10,8 @@ var configuration = {
   gitops: {
     url: 'https://github.com/danielscholl/aks-elastic'
     tag: 'v0.0.1'
-    infra: './stamp/infra'
-    apps: './stamp/apps'
+    infra: './software/stamp/infra'
+    apps: './software/stamp/apps'
   }
 }
 
