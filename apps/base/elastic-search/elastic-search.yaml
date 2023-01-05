@@ -5,7 +5,7 @@ metadata:
   name: elasticsearch-ha
   namespace: elastic-search
 spec:
-  version: 8.5.0
+  version: 8.5.3
   nodeSets:
   - name: master
     count: 3
