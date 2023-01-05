@@ -14,7 +14,7 @@ spec:
         name: elastic-operator
         namespace: elastic-system
       interval: 12h
-  values:
-    podLabels:
-      traffic.sidecar.istio.io/excludeInboundPorts: "9443"
-      traffic.sidecar.istio.io/includeInboundPorts: '*'
+  # values:
+  #   podLabels:
+  #     traffic.sidecar.istio.io/excludeInboundPorts: "9443"
+  #     traffic.sidecar.istio.io/includeInboundPorts: '*'
