@@ -83,6 +83,16 @@ spec:
       node:
         roles: [ "data" ]
         store.allow_mmap: false
+    volumeClaimTemplates:
+    - metadata:
+        name: elasticsearch-data
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 5Gi
+        storageClassName: es-storageclass
     podTemplate:
       spec:
         tolerations:
